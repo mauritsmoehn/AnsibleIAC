@@ -1,0 +1,9 @@
+[webservers]
+Web01 ansible_host=192.168.56.10 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+Web02 ansible_host=192.168.56.11 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+
+[loadbalancers]
+Lb01 ansible_host=192.168.56.20 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+
+[databaseservers]
+Db01 ansible_host=192.168.56.30 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa

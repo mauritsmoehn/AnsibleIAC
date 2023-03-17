@@ -1,0 +1,6 @@
+---
+- hosts: loadbalancers
+  become: true
+  become_method: sudo
+  roles:
+    - "/media/student/Data/ansible/roles/loadbalancer"

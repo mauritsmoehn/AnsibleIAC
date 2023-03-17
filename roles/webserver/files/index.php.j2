@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>Welcome to test!</title>
+   </head>
+   <body>
+       <?php
+       require "/var/www//test/vendor/autoload.php";
+       try {
+           $conn = new MongoDB\Client("mongodb://192.168.56.30:27017");
+           $collection = $conn->selectCollection('test', 'products');
+           $result = $collection->findOne();
+           var_dump($result);
+       }
+       catch (Throwable $e) {
+           echo "Kanker het werkt niet: " . $e->getMessage() . PHP_EOL;
+       }
+       ?>
+   </body>
+</html>
