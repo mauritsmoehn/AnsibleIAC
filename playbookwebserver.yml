@@ -1,5 +1,5 @@
 ---
-- hosts: webservers
+- hosts: webserver
   become: true
   become_method: sudo
   roles:
