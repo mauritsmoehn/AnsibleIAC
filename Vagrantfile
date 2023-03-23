@@ -5,8 +5,9 @@ Vagrant.configure("2") do |config|
     db01.vm.hostname = "Databaseserver01"
     db01.vm.network "private_network", ip: "192.168.56.30"
 
-    db01.vm.provider "virtualbox" do |v|
-      v.name = "Databaseserver01"
+    db01.vm.provider "virtualbox" do |db01|
+      db01.name = "Databaseserver01"
+      db01.memory = 2048
     end
     db01.ssh.insert_key = false
     db01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
@@ -20,7 +21,7 @@ Vagrant.configure("2") do |config|
     end
 
     db01.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbookdatabaseserver.yml"
+        ansible.playbook = "playbook.yml"
         ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
     end
   end
@@ -30,8 +31,9 @@ Vagrant.configure("2") do |config|
     web01.vm.hostname = "Webserver01"
     web01.vm.network "private_network", ip: "192.168.56.10"
 
-    web01.vm.provider "virtualbox" do |v|
-      v.name = "Webserver01"
+    web01.vm.provider "virtualbox" do |web01|
+      web01.name = "Webserver01"
+      web01.memory = 2048
     end
     web01.ssh.insert_key = false
     web01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
@@ -45,7 +47,7 @@ Vagrant.configure("2") do |config|
     end
    
     web01.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbookwebserver.yml"
+        ansible.playbook = "playbook.yml"
 	ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
     end
   end
@@ -55,8 +57,9 @@ Vagrant.configure("2") do |config|
     web02.vm.hostname = "Webserver02"
     web02.vm.network "private_network", ip: "192.168.56.11"
 
-    web02.vm.provider "virtualbox" do |v|
-      v.name = "Webserver02"
+    web02.vm.provider "virtualbox" do |web02|
+      web02.name = "Webserver02"
+      web02.memory = 2048
     end
     web02.ssh.insert_key = false
     web02.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
@@ -70,7 +73,7 @@ Vagrant.configure("2") do |config|
     end
     
     web02.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbookwebserver.yml"
+        ansible.playbook = "playbook.yml"
 	ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
     end
   end
@@ -80,8 +83,9 @@ Vagrant.configure("2") do |config|
     lb01.vm.hostname = "Loadbalancer01"
     lb01.vm.network "private_network", ip: "192.168.56.20"
 
-    lb01.vm.provider "virtualbox" do |v|
-      v.name = "Loadbalancer01"
+    lb01.vm.provider "virtualbox" do |lb01|
+      lb01.name = "Loadbalancer01"
+      v.memory = 4096
     end
     lb01.ssh.insert_key = false
     lb01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
@@ -94,10 +98,8 @@ Vagrant.configure("2") do |config|
     SHELL
     end
 
-
-
     lb01.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbookloadbalancer.yml"
+        ansible.playbook = "playbook.yml"
 	ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
     end
   end
