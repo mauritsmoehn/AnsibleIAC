@@ -7,7 +7,9 @@
        <?php
        require "/var/www//test/vendor/autoload.php";
        try {
-           $conn = new MongoDB\Client("mongodb://192.168.56.30:27017");
+	   $user = "beheerder";
+	   $pwd = 'Windesheim2023!';
+           $conn = new MongoDB\Client("mongodb://${user}:${pwd}@192.168.56.30:27017");
            $collection = $conn->selectCollection('test', 'products');
            $result = $collection->findOne();
            var_dump($result);

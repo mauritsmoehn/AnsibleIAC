@@ -25,58 +25,35 @@ Vagrant.configure("2") do |config|
         ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
     end
   end
+  
+  aantalWebservers = 2
+  (1..aantalWebservers).each do |i|
+    config.vm.define "Web0#{i}" do |node|
+      node.vm.box = "ubuntu/jammy64"
+      node.vm.hostname = "Webserver0#{i}"
+      node.vm.network "private_network", ip: "192.168.56.1#{i}"
 
-  config.vm.define "Web01" do |web01|
-    web01.vm.box = "ubuntu/jammy64"
-    web01.vm.hostname = "Webserver01"
-    web01.vm.network "private_network", ip: "192.168.56.10"
+      node.vm.provider "virtualbox" do |node|
+	node.name = "Webserver0#{i}"
+	node.memory = 2048
+      end
+      node.ssh.insert_key = false
+      node.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
+      node.ssh.forward_agent = true
+      node.vm.provision "shell" do |s|
+      ssh_pub_key = File.readlines("/home/student/.ssh/id_rsa.pub").first.strip
+      s.inline = <<-SHELL
+      echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
+      echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
+      SHELL
+      end
 
-    web01.vm.provider "virtualbox" do |web01|
-      web01.name = "Webserver01"
-      web01.memory = 2048
+      node.vm.provision "ansible" do |ansible|
+	  ansible.playbook = "playbook.yml"
+	  ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
+      end
     end
-    web01.ssh.insert_key = false
-    web01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
-    web01.ssh.forward_agent = true   
-    web01.vm.provision "shell" do |s|
-    ssh_pub_key = File.readlines("/home/student/.ssh/id_rsa.pub").first.strip
-    s.inline = <<-SHELL
-    echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-    echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
-    SHELL
-    end
-   
-    web01.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbook.yml"
-	ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
-    end
-  end
-
-  config.vm.define "Web02" do |web02|
-    web02.vm.box = "ubuntu/jammy64"
-    web02.vm.hostname = "Webserver02"
-    web02.vm.network "private_network", ip: "192.168.56.11"
-
-    web02.vm.provider "virtualbox" do |web02|
-      web02.name = "Webserver02"
-      web02.memory = 2048
-    end
-    web02.ssh.insert_key = false
-    web02.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
-    web02.ssh.forward_agent = true
-    web02.vm.provision "shell" do |s|
-    ssh_pub_key = File.readlines("/home/student/.ssh/id_rsa.pub").first.strip
-    s.inline = <<-SHELL
-    echo #{ssh_pub_key} >> /home/vagrant/.ssh/authorized_keys
-    echo #{ssh_pub_key} >> /root/.ssh/authorized_keys
-    SHELL
-    end
-    
-    web02.vm.provision "ansible" do |ansible|
-        ansible.playbook = "playbook.yml"
-	ansible.inventory_path = "/media/student/Data/ansible/inventory.yml"
-    end
-  end
+  end 
 
   config.vm.define "Lb01" do |lb01|
     lb01.vm.box = "ubuntu/jammy64"
@@ -85,7 +62,7 @@ Vagrant.configure("2") do |config|
 
     lb01.vm.provider "virtualbox" do |lb01|
       lb01.name = "Loadbalancer01"
-      v.memory = 4096
+      lb01.memory = 2048
     end
     lb01.ssh.insert_key = false
     lb01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]

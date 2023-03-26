@@ -18,8 +18,13 @@
       - apt-transport-https
       - ca-certificates
       - software-properties-common
+      - python3-pip
     state: latest
     update_cache: true
+
+- name: Install PYMONGO
+  ansible.builtin.pip:
+    name: pymongo
 
 - name: import public key voor mongodb
   apt_key:
@@ -71,6 +76,14 @@
   community.mongodb.mongodb_shell:
     mongo_cmd: "mongosh"
     eval: "db.products.insert( { bikes: 4 } )"
+
+- name: User aanmaken voor MongoDB
+  mongodb_user:
+    login_port: "27017"
+    database: "admin"
+    name: "{{ mongodbAdmin }}"
+    password: "{{ mongodbAdminPass }}"
+    roles: "root"
 
 - name:  Set vm.dirty_ratio
   sysctl:
