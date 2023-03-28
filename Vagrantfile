@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
 
     db01.vm.provider "virtualbox" do |db01|
       db01.name = "Databaseserver01"
-      db01.memory = 2048
+      db01.memory = 4000
     end
     db01.ssh.insert_key = false
     db01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
