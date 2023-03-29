@@ -1,13 +1,13 @@
 Vagrant.configure("2") do |config|
 
-  config.vm.define "Db01" do |db01|
+  config.vm.define "db01" do |db01|
     db01.vm.box = "ubuntu/focal64"
     db01.vm.hostname = "Databaseserver01"
     db01.vm.network "private_network", ip: "192.168.56.30"
 
     db01.vm.provider "virtualbox" do |db01|
       db01.name = "Databaseserver01"
-      db01.memory = 4000
+      db01.memory = 3000
     end
     db01.ssh.insert_key = false
     db01.ssh.private_key_path = [ '~/.ssh/id_rsa', '~/.vagrant.d/insecure_private_key' ]
@@ -26,9 +26,9 @@ Vagrant.configure("2") do |config|
     end
   end
   
-  aantalWebservers = 2
+  aantalWebservers = 4
   (1..aantalWebservers).each do |i|
-    config.vm.define "Web0#{i}" do |node|
+    config.vm.define "web0#{i}" do |node|
       node.vm.box = "ubuntu/jammy64"
       node.vm.hostname = "Webserver0#{i}"
       node.vm.network "private_network", ip: "192.168.56.1#{i}"
@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
     end
   end 
 
-  config.vm.define "Lb01" do |lb01|
+  config.vm.define "lb01" do |lb01|
     lb01.vm.box = "ubuntu/jammy64"
     lb01.vm.hostname = "Loadbalancer01"
     lb01.vm.network "private_network", ip: "192.168.56.20"

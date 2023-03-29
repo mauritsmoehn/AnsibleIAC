@@ -1,13 +1,15 @@
 [loadbalancers]
-Lb01 ansible_host=192.168.56.20 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+lb01 ansible_host=192.168.56.20 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
 
 [databaseservers]
-Db01 ansible_host=192.168.56.30 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+db01 ansible_host=192.168.56.30 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
 
 [webservers]
-Web01 ansible_host=192.168.56.11 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
-Web02 ansible_host=192.168.56.12 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
-Web03 ansible_host=192.168.56.13 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+web01 ansible_host=192.168.56.11 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+web02 ansible_host=192.168.56.12 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+web03 ansible_host=192.168.56.13 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
 Testweb01 ansible_host=192.168.56.201 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
 Testweb02 ansible_host=192.168.56.202 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
 Testweb03 ansible_host=192.168.56.203 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+Testweb01 ansible_host=192.168.56.201 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa
+Testweb02 ansible_host=192.168.56.202 ansible_ssh_private_key_file=/home/student/.ssh/id_rsa

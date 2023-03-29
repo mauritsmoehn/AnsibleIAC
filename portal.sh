@@ -9,7 +9,7 @@ function CHANGE_RAM () {
 #Functie die het aantal webservers aanpast. Gebruikt 1 argument. Past de for-loop aan in de Vagrantfile
 function CHANGE_WEBSERVERS () {
 	sed -i "s|aantalWebservers =.*|aantalWebservers = $1|g" Vagrantfile
-	vagrant reload 
+	vagrant up
 }
 
 echo "welke taak wil je uitvoeren?"
@@ -48,7 +48,7 @@ do
 		echo "Bestanden en Vagrantfile gekopieerd"
 		sed -i "s|aantalWebservers =.*|aantalWebservers = $aantalTestWebservers|g" /media/student/Data/ansible/testomgeving/VagrantfileTestomgeving
 		sed -i "s|klantnummer =.*|klantnummer = $klantnummer|g" /media/student/Data/ansible/testomgeving/VagrantfileTestomgeving
-		sed -i "s|node.vm.hostname = "Webserver0#{i}"|node.vm.hostname = "TestWebserver0#{i}"|g" /media/student/Data/ansible/testomgeving/VagrantfileTestomgeving
+		sed -i "s|node.vm.hostname = "webserver0#{i}"|node.vm.hostname = "TestWebserver0#{i}"|g" /media/student/Data/ansible/testomgeving/VagrantfileTestomgeving
 		echo "Parameters doorgevoerd voor Testwebservers"
 		start=1
 		for i in $(eval echo "{$start..$aantalTestWebservers}")
